@@ -1,0 +1,26 @@
+{
+  "openapi": "3.0.1",
+  "info": { "title": "API DCA PDF", "version": "1.0.0" },
+  "servers": [{ "url": "https://<ton-service>.onrender.com" }],
+  "paths": {
+    "/generate-pdf": {
+      "post": {
+        "summary": "Génère un PDF DCA",
+        "responses": {
+          "200": { "description": "OK" },
+          "401": { "description": "Clé invalide" }
+        },
+        "security": [{ "ApiKeyAuth": [] }]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-API-Key"
+      }
+    }
+  }
+}
