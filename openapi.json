@@ -62,21 +62,12 @@
                 }
               }
             }
-          },
-          "401": { "description": "Clé invalide" }
-        },
-        "security": [{ "ApiKeyAuth": [] }]
+          }
+        }
       }
     }
   },
   "components": {
-    "schemas": {},
-    "securitySchemes": {
-      "ApiKeyAuth": {
-        "type": "apiKey",
-        "in": "header",
-        "name": "X-API-Key"
-      }
-    }
+    "schemas": {}
   }
 }
