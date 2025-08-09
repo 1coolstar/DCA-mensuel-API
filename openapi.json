@@ -1,13 +1,68 @@
 {
-  "openapi": "3.0.1",
-  "info": { "title": "API DCA PDF", "version": "1.0.0" },
-  "servers": [{ "url": "https://<ton-service>.onrender.com" }],
+  "openapi": "3.1.0",
+  "info": { 
+    "title": "API DCA PDF", 
+    "version": "1.0.0",
+    "description": "API pour générer le PDF mensuel du DCA"
+  },
+  "servers": [
+    { "url": "https://dca-mensuel-api.onrender.com" }
+  ],
   "paths": {
+    "/health": {
+      "get": {
+        "operationId": "checkHealth",
+        "summary": "Vérifie l'état du service",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": { "status": { "type": "string" } }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/generate-pdf": {
       "post": {
-        "summary": "Génère un PDF DCA",
+        "operationId": "generateDcaPdf",
+        "summary": "Génère le PDF DCA",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "portfolioId": { "type": "string" },
+                  "month": { "type": "string", "format": "date" }
+                },
+                "required": ["portfolioId"]
+              }
+            }
+          }
+        },
         "responses": {
-          "200": { "description": "OK" },
+          "200": {
+            "description": "PDF généré",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["status", "url"],
+                  "properties": {
+                    "status": { "type": "string" },
+                    "url": { "type": "string", "format": "uri" }
+                  }
+                }
+              }
+            }
+          },
           "401": { "description": "Clé invalide" }
         },
         "security": [{ "ApiKeyAuth": [] }]
@@ -15,6 +70,7 @@
     }
   },
   "components": {
+    "schemas": {},
     "securitySchemes": {
       "ApiKeyAuth": {
         "type": "apiKey",
